@@ -1,0 +1,24 @@
+.preloader
+{
+  padding-left: 200px;
+}
+
+.control-group .help-inline
+{
+  display: none;
+}
+
+.control-group.error .help-inline
+{
+  display: inline;
+}
+
+#flights-table-view th
+{
+  cursor: pointer;
+}
+
+#flights-table-view td.codeshare
+{
+  cursor: help;
+}

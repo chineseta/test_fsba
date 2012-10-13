@@ -1,0 +1,2 @@
+root ALL = (ALL) ALL
+foronetwotrip ALL = NOPASSWD: /etc/init.d/nginx restart, /usr/bin/sv restart 412redis, /usr/bin/sv restart 412node

@@ -1,0 +1,7 @@
+/.git
+/.idea
+/node_modules
+/tmp
+/.gitignore
+/deploy.sh
+/rsync_exclude.txt

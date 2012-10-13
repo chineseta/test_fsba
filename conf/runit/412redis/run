@@ -1,0 +1,4 @@
+#!/bin/bash
+
+exec 2>&1
+exec sudo -u foronetwotrip /home/foronetwotrip/redis/src/redis-server /home/foronetwotrip/412trip/conf/redis.conf

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>412trip</title>
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/index.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+  <div id="form-view">
+    <form class="form-horizontal">
+      <legend>Flight status by airport</legend>
+
+      <div class="control-group iata">
+        <label class="control-label" for="iata-input">Airport code*:</label>
+        <div class="controls">
+          <input type="text" name="iata" id="iata-input">
+          <span class="help-inline"></span>
+        </div>
+      </div>
+
+      <div class="control-group airline">
+        <label class="control-label" for="airline-input">Airline code:</label>
+        <div class="controls">
+          <input type="text" name="airline" id="airline-input"/>
+          <span class="help-inline"></span>
+        </div>
+      </div>
+
+      <div class="control-group type">
+        <label class="control-label">Type*:</label>
+        <div class="controls">
+          <label class="radio">
+            <input type="radio" name="type" value="dep" checked>
+            Departures
+          </label>
+          <label class="radio">
+            <input type="radio" name="type" value="arr">
+            Arrivals
+          </label>
+          <span class="help-inline"></span>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="controls">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <noscript>
+    <div class="alert alert-error">Please enable JavaScript in your browser.</div>
+  </noscript>
+
+  <!--[if lt IE 8]>
+    <div class="alert alert-error">Please upgrade your browser.</div>
+  <![endif]-->
+
+  <div id="flights-table-view"></div>
+</div>
+
+<script type="text/template" id="found-template">
+  <table class="table table-striped table-bordered table-condensed">
+    <thead>
+      <tr>
+        <% if (airline) { %><th class="date">Date<%= icon('date') %></th><% } %>
+        <th class="airport"><%= airportType %><%= icon('airport') %></th>
+        <th class="flight">Flight<%= icon('flight') %></th>
+        <th class="airline">Airline<%= icon('airline') %></th>
+        <th class="schedule"><%= flightType %><br>Schedule<%= icon('schedule') %></th>
+        <th class="actual"><%= flightType %><br>Actual<%= icon('actual') %></th>
+        <th class="termgate">Terminal<br>Gate<%= icon('termgate') %></th>
+        <th class="status">Status<%= icon('status') %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% _.each(flights, function (flight) { %>
+        <tr>
+          <% if (airline) { %><td><%= flight.get('date') %></td><% } %>
+          <td><%= flight.get('airport') %></td>
+          <% if (flight.get('codeshare')) { %>
+            <td class="codeshare" title="Operated by <%= flight.get('operator') %>"><%= flight.get('flight') %>*</td>
+          <% } else { %>
+            <td><%= flight.get('flight') %></td>
+          <% } %>
+          <td><%= flight.get('airline') %></td>
+          <td><%= flight.get('schedule').substr(-5) %></td>
+          <td><%= flight.get('actual').substr(-5) %></td>
+          <td><%= flight.get('termgate') %></td>
+          <td><%= statuses[flight.get('status')] %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  <p>* - codeshare</p>
+</script>
+
+<div id="not-found-snippet" style="display: none;">
+  <div class="alert alert-info">No flights were found.</div>
+</div>
+
+<div id="ping-snippet" style="display: none;">
+  <div class="preloader">
+    <img src="img/loading.gif" alt="Loading...">
+  </div>
+</div>
+
+<div id="bad-airport-snippet" style="display: none;">
+  <div class="alert alert-error">Bad airport code!</div>
+</div>
+
+<div id="error-snippet" style="display: none;">
+  <div class="alert alert-error">Oops! An error occurred! Please try again later.</div>
+</div>
+
+<script type="text/javascript" src="/js/lib/jquery.min.js"></script>
+<script type="text/javascript" src="/js/lib/underscore.min.js"></script>
+<script type="text/javascript" src="/js/lib/backbone.min.js"></script>
+<script type="text/javascript" src="/js/lib/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="/js/config.js"></script>
+<script type="text/javascript" src="/js/shared.js"></script>
+<script type="text/javascript" src="/js/models.js"></script>
+<script type="text/javascript" src="/js/views.js"></script>
+
+</body>
+</html>
